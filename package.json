@@ -1,10 +1,13 @@
 {
   "name": "personal-website",
   "version": "0.1.0",
+  "homepage": "https://Evan-Luo-jpg.github.io/personal-website",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
+    "predeploy": "npm run build",
+   "deploy": "gh-pages -d build",
     "start": "next start",
     "lint": "next lint"
   },
