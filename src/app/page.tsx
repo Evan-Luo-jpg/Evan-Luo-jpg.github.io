@@ -95,10 +95,10 @@ export default function Home() {
                 <a href="mailto:evan_luo@brown.edu" className="text-blue-600 hover:text-blue-800">evan_luo@brown.edu</a>
               </div>
               <div className="flex items-center justify-center space-x-4">
-                <a href="https://github.com/yourusername" className="text-gray-600 hover:text-gray-900 transition-colors">
+                <a href="https://github.com/Evan-Luo-jpg" className="text-gray-600 hover:text-gray-900 transition-colors">
                   GitHub
                 </a>
-                <a href="https://linkedin.com/in/yourusername" className="text-gray-600 hover:text-gray-900 transition-colors">
+                <a href="https://www.linkedin.com/in/evan-luo-48a755261/" className="text-gray-600 hover:text-gray-900 transition-colors">
                   LinkedIn
                 </a>
               </div>
