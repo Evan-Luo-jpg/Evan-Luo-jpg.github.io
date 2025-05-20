@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import { getProjects, Project } from "../lib/projects";
+import Link from 'next/link';
+
 
 export default function Home() {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -66,44 +68,52 @@ export default function Home() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {projects.map((project) => (
-                <div key={project.id} className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                <div key={project.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
                   {project.demo && (
-                    <div className="mb-4 rounded-lg overflow-hidden">
-                      <img 
-                        src={project.demo} 
-                        alt={project.title} 
-                        className="w-full h-48 object-cover"
-                        onError={(e) => {
-                          // Fallback to a default image if the project image fails to load
-                          e.currentTarget.src = '/images/project-placeholder.jpg';
-                        }}
-                      />
-                    </div>
+                    <Link href={`/projects/${project.id}`} className="block w-full h-72 group">
+                      <div className="w-full h-full relative overflow-hidden">
+                        <img 
+                          src={project.demo} 
+                          alt={project.title}
+                          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                          onError={(e) => {
+                            e.currentTarget.src = 'https://via.placeholder.com/300x200?text=Not+Found';
+                          }}
+                        />
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center">
+                          <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-medium">
+                            View Details
+                          </span>
+                        </div>
+                      </div>
+                    </Link>
                   )}
-                  <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
-                  <p className="text-gray-600">{project.description}</p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {project.technologies.map((tech, index) => (
-                      <span 
-                        key={index}
-                        className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm"
-                      >
-                        {tech}
-                      </span>
-                    ))}
+                  <div className="p-6">
+                    <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
+                    <p className="text-gray-600">{project.description}</p>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {project.technologies.map((tech, index) => (
+                        <span 
+                          key={index}
+                          className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                    {project.repo && (
+                      <div className="mt-4">
+                        <a 
+                          href={project.repo} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="text-blue-600 hover:text-blue-800 font-medium"
+                        >
+                          View Project →
+                        </a>
+                      </div>
+                    )}
                   </div>
-                  {project.repo && (
-                    <div className="mt-4">
-                      <a 
-                        href={project.repo} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="text-blue-600 hover:text-blue-800 font-medium"
-                      >
-                        View Project →
-                      </a>
-                    </div>
-                  )}
                 </div>
               ))}
             </div>
