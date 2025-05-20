@@ -5,6 +5,7 @@ import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import { getProjects, Project } from "../lib/projects";
 import Link from 'next/link';
+import Image from 'next/image';
 
 
 export default function Home() {
@@ -72,7 +73,7 @@ export default function Home() {
                   {project.demo && (
                     <Link href={`/projects/${project.id}`} className="block w-full h-72 group">
                       <div className="w-full h-full relative overflow-hidden">
-                        <img 
+                        <Image
                           src={project.demo} 
                           alt={project.title}
                           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
