@@ -1,7 +1,31 @@
+"use client";
+
+import { useEffect, useState } from 'react';
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
+import { getProjects, Project } from "../lib/projects";
 
 export default function Home() {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const fetchedProjects = await getProjects();
+        setProjects(fetchedProjects);
+      } catch (err) {
+        setError('Failed to load projects');
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <NavBar />
@@ -31,30 +55,59 @@ export default function Home() {
       <section id="projects" className="py-16 px-4">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold mb-8 text-center">Featured Projects</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-              <h3 className="text-xl font-semibold mb-2">Project 1</h3>
-              <p className="text-gray-600">Description of your first project</p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">React</span>
-                <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Node.js</span>
-              </div>
-              <div className="mt-4">
-                <a href="#" className="text-blue-600 hover:text-blue-800 font-medium">View Project →</a>
-              </div>
+          {loading ? (
+            <div className="flex justify-center items-center min-h-[200px]">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
             </div>
-            <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-              <h3 className="text-xl font-semibold mb-2">Project 2</h3>
-              <p className="text-gray-600">Description of your second project</p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">Next.js</span>
-                <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm">TypeScript</span>
-              </div>
-              <div className="mt-4">
-                <a href="#" className="text-blue-600 hover:text-blue-800 font-medium">View Project →</a>
-              </div>
+          ) : error ? (
+            <div className="text-center text-red-600">
+              {error}
             </div>
-          </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {projects.map((project) => (
+                <div key={project.id} className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                  {project.demo && (
+                    <div className="mb-4 rounded-lg overflow-hidden">
+                      <img 
+                        src={project.demo} 
+                        alt={project.title} 
+                        className="w-full h-48 object-cover"
+                        onError={(e) => {
+                          // Fallback to a default image if the project image fails to load
+                          e.currentTarget.src = '/images/project-placeholder.jpg';
+                        }}
+                      />
+                    </div>
+                  )}
+                  <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
+                  <p className="text-gray-600">{project.description}</p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {project.technologies.map((tech, index) => (
+                      <span 
+                        key={index}
+                        className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                  {project.repo && (
+                    <div className="mt-4">
+                      <a 
+                        href={project.repo} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="text-blue-600 hover:text-blue-800 font-medium"
+                      >
+                        View Project →
+                      </a>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
