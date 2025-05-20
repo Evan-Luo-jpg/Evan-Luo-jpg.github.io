@@ -12,13 +12,14 @@ export async function generateStaticParams() {
   }));
 }
 
-type Props = {
-  params: {
-    id: string;
+type PageProps = {
+    params: {
+      id: string;
+    };
+    searchParams: Record<string, string | string[] | undefined>;
   };
-};
-
-export default async function ProjectPage({ params }: Props) {
+  
+  export default async function ProjectPage({ params, searchParams }: PageProps) {
   const projects = await getProjects();
   const projectId = params.id;
   const project = projects.find(p => p.id === projectId);
