@@ -8,6 +8,9 @@ const nextConfig: NextConfig = {
   output: "export",
   basePath: isProd ? '/Evan-Luo-jpg.github.io' : '',
   assetPrefix: isProd ? '/Evan-Luo-jpg.github.io': '',
+  images: {
+    unoptimized: true,
+  },
 };
 
 export default nextConfig;
