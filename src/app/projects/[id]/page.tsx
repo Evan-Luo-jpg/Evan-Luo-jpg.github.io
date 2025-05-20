@@ -4,6 +4,7 @@ import Footer from '../../../components/Footer';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import ProjectImage from './ProjectImage';
+import { type Metadata, type ResolvingMetadata } from 'next';
 
 export async function generateStaticParams() {
   const projects = await getProjects();
@@ -12,7 +13,13 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function ProjectPage({ params }: { params: { id: string } }) {
+type Props = {
+    params: {
+      id: string;
+    };
+  };
+
+export default async function ProjectPage({ params }: Props) {
   const projects = await getProjects();
   const projectId = params.id;
   const project = projects.find(p => p.id === projectId);

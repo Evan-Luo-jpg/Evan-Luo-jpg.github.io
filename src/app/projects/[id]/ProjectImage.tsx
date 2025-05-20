@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 
 interface ProjectImageProps {
   src: string;
@@ -8,7 +9,7 @@ interface ProjectImageProps {
 
 export default function ProjectImage({ src, alt, className = '' }: ProjectImageProps) {
   return (
-    <img 
+    <Image 
       src={src} 
       alt={alt} 
       className={`w-full h-full object-cover ${className}`}
