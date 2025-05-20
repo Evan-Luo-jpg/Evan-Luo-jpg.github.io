@@ -71,23 +71,16 @@ export default function Home() {
               {projects.map((project) => (
                 <div key={project.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
                   {project.demo && (
-                    <Link href={`/projects/${project.id}`} className="block w-full h-72 group">
-                      <div className="w-full h-full relative overflow-hidden">
-                        <Image
-                          src={project.demo} 
-                          alt={project.title}
-                          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                          onError={(e) => {
-                            e.currentTarget.src = 'https://via.placeholder.com/300x200?text=Not+Found';
-                          }}
-                        />
-                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center">
-                          <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-medium">
-                            View Details
-                          </span>
-                        </div>
-                      </div>
-                    </Link>
+                    <div className="w-full h-full relative overflow-hidden">
+                      <Image
+                        src={project.demo} 
+                        alt={project.title}
+                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        onError={(e) => {
+                          e.currentTarget.src = 'https://via.placeholder.com/300x200?text=Not+Found';
+                        }}
+                      />
+                    </div>
                   )}
                   <div className="p-6">
                     <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
