@@ -70,10 +70,12 @@ export default function Home() {
               {projects.map((project) => (
                 <div key={project.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
                   {project.demo && (
-                    <div className="w-full h-full relative overflow-hidden">
+                    <div className="w-full h-72 relative overflow-hidden">
                       <Image
                         src={project.demo} 
                         alt={project.title}
+                        width={800}
+                        height={400}
                         className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                         onError={(e) => {
                           e.currentTarget.src = 'https://via.placeholder.com/300x200?text=Not+Found';
