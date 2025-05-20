@@ -5,27 +5,33 @@ import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import { getProjects, Project } from "../lib/projects";
 import Image from 'next/image';
+import { getPapers, Paper} from "../lib/papers"
 
 
 export default function Home() {
   const [projects, setProjects] = useState<Project[]>([]);
+  const [papers, setPapers] = useState<Paper[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchProjects = async () => {
+    const fetchData = async () => {
       try {
-        const fetchedProjects = await getProjects();
+        const [fetchedProjects, fetchedPapers] = await Promise.all([
+          getProjects(),
+          getPapers()
+        ]);
         setProjects(fetchedProjects);
+        setPapers(fetchedPapers);
       } catch (err) {
-        setError('Failed to load projects');
+        setError('Failed to load data');
         console.error(err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchProjects();
+    fetchData();
   }, []);
 
   return (
@@ -120,24 +126,36 @@ export default function Home() {
       <section id="papers" className="py-16 px-4 bg-gray-50">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold mb-8 text-center">Research Papers</h2>
-          <div className="space-y-6">
-            <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
-              <h3 className="text-xl font-semibold mb-2">Paper Title 1</h3>
-              <p className="text-gray-600 mb-2">Authors: Evan Luo, Co-author</p>
-              <p className="text-gray-600">Published in: Journal/Conference Name</p>
-              <div className="mt-4">
-                <a href="#" className="text-blue-600 hover:text-blue-800 font-medium">Read Paper →</a>
-              </div>
+          {loading ? (
+            <div className="flex justify-center items-center min-h-[200px]">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
             </div>
-            <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
-              <h3 className="text-xl font-semibold mb-2">Paper Title 2</h3>
-              <p className="text-gray-600 mb-2">Authors: Evan Luo, Co-author</p>
-              <p className="text-gray-600">Published in: Journal/Conference Name</p>
-              <div className="mt-4">
-                <a href="#" className="text-blue-600 hover:text-blue-800 font-medium">Read Paper →</a>
-              </div>
+          ) : error ? (
+            <div className="text-center text-red-600">
+              {error}
             </div>
-          </div>
+          ) : (
+            <div className="space-y-6">
+              {papers.map((paper) => (
+                <div key={paper.id} className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
+                  <h3 className="text-xl font-semibold mb-2">{paper.title}</h3>
+                  <p className="text-gray-600 mb-2">{paper.conference}</p>
+                  {paper.link && (
+                    <div className="mt-4">
+                      <a 
+                        href={paper.link} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="text-blue-600 hover:text-blue-800 font-medium"
+                      >
+                        Read Paper →
+                      </a>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
