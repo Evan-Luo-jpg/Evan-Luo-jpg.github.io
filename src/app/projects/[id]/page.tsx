@@ -4,7 +4,6 @@ import Footer from '../../../components/Footer';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import ProjectImage from './ProjectImage';
-import { type Metadata, type ResolvingMetadata } from 'next';
 
 export async function generateStaticParams() {
   const projects = await getProjects();
