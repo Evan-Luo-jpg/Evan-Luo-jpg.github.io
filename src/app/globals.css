@@ -76,6 +76,13 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  
+  /* Ski Chalet Theme Colors */
+  --ice-white: #F0F5FA;
+  --deep-navy: #023E8A;
+  --snow-white: #FFFFFF;
+  --frost-blue: #E3F2FD;
+  --scroll-bg-position: 0vh;
 }
 
 .dark {
@@ -118,5 +125,155 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Poppins', sans-serif;
+    background: #E3F2FD; /* Set base background to light blue */
+    overflow-x: hidden;
+    min-height: 100vh;
   }
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Image Container with Mask Gradient */
+.image-container {
+  position: relative;
+  height: 100vh;
+  background-color: #E3F2FD; /* Solid light blue to match projects section */
+  overflow: hidden;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  mask-image: linear-gradient(to bottom, black 30%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.4) 70%, rgba(0,0,0,0.1) 90%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 30%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.4) 70%, rgba(0,0,0,0.1) 90%, transparent 100%);
+}
+
+/* Ski Chalet Theme Animations */
+@keyframes snowfall {
+  0% {
+    transform: translateY(-100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes snow-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes chalet-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
+  }
+}
+
+@keyframes snow-fall {
+  0% {
+    transform: translateY(-10px) rotate(0deg);
+  }
+  100% {
+    transform: translateY(10px) rotate(360deg);
+  }
+}
+
+/* Ski Chalet Theme Utility Classes */
+.snow-particle {
+  position: absolute;
+  width: 8px; /* Bigger snowflakes */
+  height: 8px; /* Bigger snowflakes */
+  background: white;
+  border-radius: 50%;
+  animation: snowfall linear infinite;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.9); /* More prominent glow */
+}
+
+.snow-reveal {
+  animation: snow-reveal 1s ease-out forwards;
+}
+
+.fade-in-up {
+  animation: fade-in-up 0.8s ease-out forwards;
+}
+
+.frosted-glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+
+
+.btn-primary {
+  background: linear-gradient(135deg, #023E8A 0%, #1E40AF 100%);
+  box-shadow: 0 4px 15px rgba(2, 62, 138, 0.3);
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(2, 62, 138, 0.4);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.text-shadow {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.text-shadow-lg {
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.snow-accumulation {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.4) 50%, transparent 100%);
+}
+
+/* Scroll-based background transition */
+.scroll-bg {
+  background: linear-gradient(180deg, #E3F2FD 0%, #F0F5FA 50%, #FFFFFF 100%);
+  background-attachment: fixed;
+  background-size: 100% 400vh;
+  background-position: 0 calc(var(--scroll-bg-position, 0vh));
 }
