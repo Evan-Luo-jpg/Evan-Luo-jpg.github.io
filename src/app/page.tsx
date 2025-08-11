@@ -82,9 +82,6 @@ export default function Home() {
                 <h2 className="text-4xl md:text-5xl font-bold text-[#023E8A] mb-6 fade-in-up">
                   Featured Projects
                 </h2>
-                <p className="text-xl text-gray-700 max-w-3xl mx-auto fade-in-up" style={{ animationDelay: '0.3s' }}>
-                  A collection of innovative solutions and creative endeavors, each crafted with precision and passion
-                </p>
               </div>
 
               {loading ? (
@@ -122,10 +119,6 @@ export default function Home() {
               <h2 className="text-4xl md:text-5xl font-bold text-[#023E8A] mb-6 fade-in-up">
                 Get in Touch
               </h2>
-              <p className="text-xl text-gray-700 mb-12 fade-in-up" style={{ animationDelay: '0.3s' }}>
-                Ready to collaborate on something amazing? Let&apos;s connect!
-              </p>
-              
               <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-white/20">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="text-center">

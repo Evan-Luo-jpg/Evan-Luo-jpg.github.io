@@ -1,6 +1,5 @@
 "use client";
 
-import Image from 'next/image';
 
 interface HeroProps {
   onScrollToProjects: () => void;
@@ -24,7 +23,7 @@ export default function Hero({ onScrollToProjects }: HeroProps) {
           Code on the Slopes
         </p>
         <p className="text-lg md:text-xl mb-12 max-w-2xl mx-auto fade-in-up text-shadow text-gray-700"  style={{ animationDelay: '0.6s' }}>
-          Software Engineer &amp; Researcher crafting elegant solutions in the digital wilderness
+          Software Engineer &amp; Researcher
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center fade-in-up" style={{ animationDelay: '0.9s' }}>

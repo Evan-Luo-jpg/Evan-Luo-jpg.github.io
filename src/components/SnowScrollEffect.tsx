@@ -6,70 +6,77 @@ interface SnowScrollEffectProps {
   children: React.ReactNode;
 }
 
+interface Particle {
+  left: number;
+  delay: number;
+  duration: number;
+  opacity: number;
+}
+
 export default function SnowScrollEffect({ children }: SnowScrollEffectProps) {
   const [snowIntensity, setSnowIntensity] = useState(0);
+  const [particles, setParticles] = useState<Particle[]>([]);
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      
-      // Calculate snow intensity based on scroll position
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
       const scrollProgress = Math.min(currentScrollY / maxScroll, 1);
       setSnowIntensity(scrollProgress);
     };
 
     window.addEventListener('scroll', handleScroll);
+    handleScroll(); // initialize intensity on load
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Generate additional snow particles based on intensity
-  const generateSnowParticles = () => {
-    const particles = [];
+  useEffect(() => {
+    // Regenerate particles whenever intensity changes
     const particleCount = Math.floor(snowIntensity * 60) + 15; // 15-75 particles
-    
+    const newParticles: Particle[] = [];
+
     for (let i = 0; i < particleCount; i++) {
-      const left = Math.random() * 100;
-      const animationDelay = Math.random() * 10;
-      const animationDuration = 12 + Math.random() * 8; // 12-20 seconds
-      
-      particles.push(
-        <div
-          key={i}
-          className="snow-particle"
-          style={{
-            left: `${left}%`,
-            animationDelay: `${animationDelay}s`,
-            animationDuration: `${animationDuration}s`,
-            opacity: 0.3 + Math.random() * 0.5,
-          }}
-        />
-      );
+      newParticles.push({
+        left: Math.random() * 100,
+        delay: Math.random() * 10,
+        duration: 12 + Math.random() * 8,
+        opacity: 0.3 + Math.random() * 0.5,
+      });
     }
-    
-    return particles;
-  };
+
+    setParticles(newParticles);
+  }, [snowIntensity]);
 
   return (
     <div className="relative">
       {/* Additional Snow Layer Overlays */}
-      <div 
+      <div
         className="fixed inset-0 pointer-events-none z-10 transition-opacity duration-1000"
-        style={{ 
+        style={{
           opacity: Math.min(snowIntensity * 0.3, 0.3),
-          background: 'linear-gradient(to bottom, transparent, rgba(255,255,255,0.1))'
+          background: 'linear-gradient(to bottom, transparent, rgba(255,255,255,0.1))',
         }}
       />
-      
+
       {/* Additional Snow Particles */}
       <div className="fixed inset-0 pointer-events-none z-15">
-        {generateSnowParticles()}
+        {particles.map((p, i) => (
+          <div
+            key={i}
+            className="snow-particle"
+            style={{
+              left: `${p.left}%`,
+              animationDelay: `${p.delay}s`,
+              animationDuration: `${p.duration}s`,
+              opacity: p.opacity,
+            }}
+          />
+        ))}
       </div>
-      
+
       {/* Content */}
-      <div className="relative z-20">
-        {children}
-      </div>
+      <div className="relative z-20">{children}</div>
     </div>
   );
-} 
+}
