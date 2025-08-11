@@ -76,7 +76,7 @@ export default function Home() {
         
         <main>
           {/* Projects Section */}
-          <section ref={projectsRef} className="py-20 px-4">
+          <section id="projects" ref={projectsRef} className="py-20 px-4">
             <div className="max-w-7xl mx-auto">
               <div className="text-center mb-16">
                 <h2 className="text-4xl md:text-5xl font-bold text-[#023E8A] mb-6 fade-in-up">
